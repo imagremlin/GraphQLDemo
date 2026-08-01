@@ -2,21 +2,21 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client/react";
 import { ADD_BOOK } from "../graphql/mutations";
 import { GET_BOOKS } from "../graphql/queries";
-import type { AddBookPayload, Book } from "../types";
 
-interface AddBookData {
-  addBook: AddBookPayload;
-}
+import type { GetBooksQuery } from "../generated/graphql";
+
+type BookListItem = GetBooksQuery["books"][number];
+
 
 interface GetBooksData {
-  books: Book[];
+  books: BookListItem[];
 }
 
 export function AddBookForm() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
-  const [addBook, { loading, error }] = useMutation<AddBookData>(ADD_BOOK, {
+  const [addBook, { loading, error }] = useMutation(ADD_BOOK, {
     update(cache, result) {
       const newBook = result.data?.addBook.book;
       if (!newBook) return;

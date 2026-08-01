@@ -1,11 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client/react";
 import { LOGIN } from "../graphql/mutations";
-import type { AuthPayload } from "../types";
-
-interface LoginData {
-  login: AuthPayload;
-}
 
 interface LoginProps {
   onLoginSuccess: () => void;
@@ -15,7 +10,7 @@ export function LoginForm({ onLoginSuccess }: LoginProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [login, { loading, error }] = useMutation<LoginData>(LOGIN);
+  const [login, { loading, error }] = useMutation(LOGIN);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

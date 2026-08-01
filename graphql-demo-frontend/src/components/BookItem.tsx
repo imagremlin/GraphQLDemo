@@ -2,41 +2,32 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client/react";
 import { UPDATE_BOOK, DELETE_BOOK } from "../graphql/mutations";
 import { GET_BOOKS } from "../graphql/queries";
-import type { Book, UpdateBookPayload, DeleteBookPayload } from "../types";
+import type { GetBooksQuery } from "../generated/graphql";
 
-interface UpdateBookData {
-  updateBook: UpdateBookPayload;
-}
-
-interface DeleteBookData {
-  deleteBook: DeleteBookPayload;
-}
-
-interface GetBooksData {
-  books: Book[];
-}
+type BookListItem = GetBooksQuery["books"][number];
 
 interface BookItemProps {
-  book: Book;
+  book: BookListItem;
   isLoggedIn: boolean;
 }
+
 
 export function BookItem({ book, isLoggedIn }: BookItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
 
-  const [updateBook, { loading: updating }] = useMutation<UpdateBookData>(UPDATE_BOOK);
+  const [updateBook, { loading: updating }] = useMutation(UPDATE_BOOK);
 
-  const [deleteBook, { loading: deleting }] = useMutation<DeleteBookData>(DELETE_BOOK, {
+  const [deleteBook, { loading: deleting }] = useMutation(DELETE_BOOK, {
     update(cache, result) {
       const success = result.data?.deleteBook.success;
       if (!success) return;
 
-      const existing = cache.readQuery<GetBooksData>({ query: GET_BOOKS });
+      const existing = cache.readQuery({ query: GET_BOOKS });
       if (!existing) return;
 
-      cache.writeQuery<GetBooksData>({
+      cache.writeQuery({
         query: GET_BOOKS,
         data: { books: existing.books.filter((b) => b.id !== book.id) },
       });

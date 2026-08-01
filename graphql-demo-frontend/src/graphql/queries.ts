@@ -1,6 +1,7 @@
-import { gql } from "@apollo/client";
+import { gql, type TypedDocumentNode } from "@apollo/client";
+import type { GetBooksQuery, GetBooksQueryVariables } from "../generated/graphql";
 
-export const GET_BOOKS = gql`
+export const GET_BOOKS : TypedDocumentNode<GetBooksQuery, GetBooksQueryVariables> = gql`
   query GetBooks {
     books {
       id
