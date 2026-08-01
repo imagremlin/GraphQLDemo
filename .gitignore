@@ -1,0 +1,73 @@
+## =========================
+## .NET / C# (backend)
+## =========================
+bin/
+obj/
+out/
+
+# Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# EF Core / SQLite local database files
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# User secrets / local config overrides
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+publish/
+
+## =========================
+## Node / React / Vite (frontend)
+## =========================
+node_modules/
+dist/
+dist-ssr/
+build/
+
+# Env files (never commit secrets/API URLs meant to be local-only)
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vite
+.vite/
+
+# Editor
+*.local
+
+## =========================
+## OS-level junk
+## =========================
+.DS_Store
+Thumbs.db
+
+## =========================
+## Misc
+## =========================
+*.log
+*.tmp
