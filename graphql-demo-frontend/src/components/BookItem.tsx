@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client/react";
 import { UPDATE_BOOK, DELETE_BOOK } from "../graphql/mutations";
 import { GET_BOOKS } from "../graphql/queries";
 import type { GetBooksQuery } from "../generated/graphql";
+import { AddReviewForm } from "./AddReview";
 
 type BookListItem = GetBooksQuery["books"][number];
 
@@ -14,6 +15,7 @@ interface BookItemProps {
 
 export function BookItem({ book, isLoggedIn }: BookItemProps) {
   const [isEditing, setIsEditing] = useState(false);
+  const [isAddingReview, setIsAddingReview] = useState(false);
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
 
@@ -99,6 +101,15 @@ export function BookItem({ book, isLoggedIn }: BookItemProps) {
             </li>
           ))}
         </ul>
+        )}
+      {isAddingReview && (
+        <AddReviewForm
+          bookId={book.id}
+          onClose={() => setIsAddingReview(false)}
+        />
+      )}
+      {!isAddingReview && isLoggedIn && (
+        <button onClick={() => setIsAddingReview(true)}>Add Review</button>
       )}
     </li>
   );

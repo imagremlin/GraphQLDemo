@@ -15,3 +15,18 @@ export const GET_BOOKS : TypedDocumentNode<GetBooksQuery, GetBooksQueryVariables
     }
   }
 `;
+
+export const GET_BOOK : TypedDocumentNode<GetBooksQuery, GetBooksQueryVariables> = gql`
+  query GetBooks {
+    books(where: { id: { eq: "Dan Simmons" } }) {
+      id
+      title
+      author
+      reviews {
+        id
+        content
+        rating
+      }
+    }
+  }
+`;
